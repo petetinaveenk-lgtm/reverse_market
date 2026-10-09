@@ -13,13 +13,13 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
- * Converts Render's DATABASE_URL (postgres://user:pass@host:5432/db)
- * to a proper JDBC URL for Spring Boot automatically.
+ * Handles all common Render/Heroku Postgres URL formats and converts them
+ * to a valid JDBC URL that Spring Boot / HikariCP can use.
  *
- * Priority order:
- *   1. SPRING_DATASOURCE_URL (already valid jdbc:... URL — used as-is)
- *   2. DATABASE_URL          (Render-provided postgres:// URL — auto-converted)
- *   3. Local default         (jdbc:mysql://localhost:3306/reverse_marketplace)
+ * Supported SPRING_DATASOURCE_URL / DATABASE_URL formats:
+ *   jdbc:postgresql://...        → used as-is
+ *   postgresql://user:pass@host  → converted to jdbc:postgresql://
+ *   postgres://user:pass@host    → converted to jdbc:postgresql://
  */
 @Configuration
 public class DataSourceConfig {
@@ -29,25 +29,35 @@ public class DataSourceConfig {
     @ConditionalOnMissingBean(DataSource.class)
     public DataSource dataSource() throws URISyntaxException {
 
-        // ─── 1. Explicit JDBC URL already provided ─────────────────────────
-        String explicitUrl = System.getenv("SPRING_DATASOURCE_URL");
-        if (explicitUrl != null && !explicitUrl.isBlank() && explicitUrl.startsWith("jdbc")) {
-            return buildHikari(
-                    explicitUrl,
-                    System.getenv("SPRING_DATASOURCE_USERNAME"),
-                    System.getenv("SPRING_DATASOURCE_PASSWORD")
-            );
+        // ─── 1. SPRING_DATASOURCE_URL (any format) ─────────────────────────
+        String url = System.getenv("SPRING_DATASOURCE_URL");
+        if (url != null && !url.isBlank()) {
+
+            if (url.startsWith("jdbc:")) {
+                // Already a valid JDBC URL — use directly with username/password env vars
+                return buildHikari(
+                        url,
+                        System.getenv("SPRING_DATASOURCE_USERNAME"),
+                        System.getenv("SPRING_DATASOURCE_PASSWORD")
+                );
+            }
+
+            if (url.startsWith("postgresql://") || url.startsWith("postgres://")) {
+                // Render-style URL passed via SPRING_DATASOURCE_URL — auto-convert
+                return buildFromPostgresUrl(url);
+            }
         }
 
-        // ─── 2. Render DATABASE_URL (postgres://…) ──────────────────────────
-        String renderUrl = System.getenv("DATABASE_URL");
-        if (renderUrl != null && !renderUrl.isBlank()) {
-            return buildFromRenderUrl(renderUrl);
+        // ─── 2. DATABASE_URL (Render auto-injected env var) ────────────────
+        String dbUrl = System.getenv("DATABASE_URL");
+        if (dbUrl != null && !dbUrl.isBlank()) {
+            if (dbUrl.startsWith("jdbc:")) {
+                return buildHikari(dbUrl, null, null);
+            }
+            return buildFromPostgresUrl(dbUrl);
         }
 
-        // ─── 3. Fall back to properties / local defaults ───────────────────
-        // Return null so Spring Boot's auto-configuration takes over using
-        // the application.properties values (local dev, docker-compose, etc.)
+        // ─── 3. Fall through — let Spring Boot use application.properties ──
         return null;
     }
 
@@ -56,22 +66,25 @@ public class DataSourceConfig {
     // ─────────────────────────────────────────────────────────────────────────
 
     /**
-     * Parses a Render Postgres URL like:
-     *   postgres://user:password@hostname:5432/database
-     * and creates a properly configured HikariDataSource.
+     * Converts postgres:// or postgresql:// URL to a HikariDataSource.
+     * Credentials embedded in the URL take priority over separate env vars.
      */
-    private DataSource buildFromRenderUrl(String rawUrl) throws URISyntaxException {
+    private DataSource buildFromPostgresUrl(String rawUrl) throws URISyntaxException {
 
-        // Render sometimes provides "postgres://" — normalize to parseable form
-        URI uri = new URI(rawUrl.replace("postgres://", "postgresql://"));
+        // Normalise both "postgres://" and "postgresql://" for java.net.URI parsing
+        String normalised = rawUrl
+                .replace("postgresql://", "pg-internal://")
+                .replace("postgres://",   "pg-internal://");
 
-        String host     = uri.getHost();
-        int    port     = uri.getPort() == -1 ? 5432 : uri.getPort();
-        String dbName   = uri.getPath().replaceFirst("^/", "");
-        String userInfo = uri.getUserInfo();
+        URI uri = new URI(normalised);
+
+        String host   = uri.getHost();
+        int    port   = uri.getPort() == -1 ? 5432 : uri.getPort();
+        String dbName = uri.getPath().replaceFirst("^/", "");
 
         String username = null;
         String password = null;
+        String userInfo = uri.getUserInfo();
 
         if (userInfo != null && userInfo.contains(":")) {
             username = userInfo.split(":", 2)[0];
@@ -80,10 +93,20 @@ public class DataSourceConfig {
             username = userInfo;
         }
 
+        // Fall back to separate env vars if credentials are not in the URL
+        if (username == null || username.isBlank()) {
+            username = System.getenv("SPRING_DATASOURCE_USERNAME");
+        }
+        if (password == null || password.isBlank()) {
+            password = System.getenv("SPRING_DATASOURCE_PASSWORD");
+        }
+
         String jdbcUrl = String.format(
                 "jdbc:postgresql://%s:%d/%s?sslmode=require",
                 host, port, dbName
         );
+
+        System.out.println("[DataSourceConfig] Converted Render URL → " + jdbcUrl);
 
         return buildHikari(jdbcUrl, username, password);
     }
@@ -100,7 +123,7 @@ public class DataSourceConfig {
             config.setPassword(password);
         }
 
-        // Connection pool settings tuned for Render Free tier
+        // Tuned for Render Free tier (1 vCPU, limited connections)
         config.setMaximumPoolSize(5);
         config.setMinimumIdle(1);
         config.setConnectionTimeout(30_000);
