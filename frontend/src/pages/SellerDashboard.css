@@ -1,0 +1,702 @@
+/* ================================
+   SELLER DASHBOARD
+================================ */
+
+.seller-dashboard {
+  min-height: 100vh;
+  background: #f5f7fb;
+  color: #1f2937;
+}
+
+/* ================================
+   HEADER
+================================ */
+
+.seller-header {
+  background: #111827;
+  color: white;
+  padding: 18px 45px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.seller-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.seller-brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.seller-brand h1 {
+  margin: 0;
+  font-size: 21px;
+}
+
+.seller-brand p {
+  margin: 3px 0 0;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.seller-header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.seller-role {
+  font-size: 14px;
+  color: #d1d5db;
+}
+
+.seller-logout {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.seller-logout:hover {
+  background: #b91c1c;
+}
+
+/* ================================
+   MAIN
+================================ */
+
+.seller-main {
+  max-width: 1200px;
+  margin: auto;
+  padding: 35px 25px 50px;
+}
+
+.seller-welcome {
+  margin-bottom: 28px;
+}
+
+.seller-welcome h2 {
+  margin: 0;
+  font-size: 30px;
+  color: #111827;
+}
+
+.seller-welcome p {
+  margin-top: 8px;
+  color: #6b7280;
+}
+
+/* ================================
+   STAT CARDS
+================================ */
+
+.seller-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 32px;
+}
+
+.seller-stat-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.seller-stat-card h4 {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.seller-stat-card p {
+  margin: 8px 0 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+/* ================================
+   SECTIONS
+================================ */
+
+.seller-section {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 25px;
+  margin-bottom: 28px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.seller-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.seller-section h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #111827;
+}
+
+.seller-section-subtitle {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* ================================
+   REQUIREMENT GRID
+================================ */
+
+.seller-requirements-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.seller-requirement-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  background: #fafbfc;
+  transition: 0.2s ease;
+}
+
+.seller-requirement-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+}
+
+.seller-requirement-card h4 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #111827;
+}
+
+.requirement-description {
+  color: #6b7280;
+  line-height: 1.5;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.requirement-info {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.requirement-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.requirement-info strong {
+  color: #111827;
+}
+
+/* ================================
+   CATEGORY BADGE
+================================ */
+
+.category-badge {
+  display: inline-block;
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ================================
+   BUTTONS
+================================ */
+
+.seller-primary-button {
+  width: 100%;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 11px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.seller-primary-button:hover {
+  background: #1d4ed8;
+}
+
+.seller-secondary-button {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  padding: 9px 15px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.seller-secondary-button:hover {
+  background: #e5e7eb;
+}
+
+/* ================================
+   OFFER FORM
+================================ */
+
+.offer-form-container {
+  background: #f8fafc;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  padding: 22px;
+}
+
+.offer-form-title {
+  margin: 0 0 5px;
+  font-size: 19px;
+  color: #111827;
+}
+
+.offer-form-description {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.offer-form {
+  display: grid;
+  gap: 15px;
+}
+
+.offer-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.offer-form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.offer-form-group input,
+.offer-form-group textarea {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  background: white;
+  color: #1f2937;
+  cursor: text;
+  pointer-events: auto;
+  user-select: text;
+}
+
+.offer-form-group input:focus,
+.offer-form-group textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.offer-form-group textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.offer-form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* ================================
+   MY OFFERS
+================================ */
+
+.seller-offers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.seller-offer-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  background: white;
+}
+
+.seller-offer-card h4 {
+  margin: 0 0 15px;
+  color: #111827;
+}
+
+.offer-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 14px;
+}
+
+.offer-row:last-child {
+  border-bottom: none;
+}
+
+.offer-label {
+  color: #6b7280;
+}
+
+.offer-value {
+  color: #111827;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* ================================
+   STATUS
+================================ */
+
+.status-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.status-pending {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.status-accepted {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.status-rejected {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+/* ================================
+   ACCEPTED OFFER
+================================ */
+
+.accepted-box {
+  margin-top: 18px;
+  padding: 13px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 8px;
+}
+
+.accepted-box p {
+  margin: 0 0 10px;
+  color: #047857;
+  font-weight: 600;
+}
+
+.chat-button {
+  background: #059669;
+  color: white;
+  border: none;
+  padding: 9px 15px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.chat-button:hover {
+  background: #047857;
+}
+
+/* ================================
+   EMPTY STATE
+================================ */
+
+.seller-empty {
+  text-align: center;
+  padding: 35px 20px;
+  color: #6b7280;
+}
+
+.seller-empty-icon {
+  font-size: 38px;
+  margin-bottom: 10px;
+}
+
+.seller-empty h4 {
+  margin: 0 0 6px;
+  color: #374151;
+}
+
+/* ================================
+   CHAT
+================================ */
+
+.seller-chat-section {
+  margin-top: 25px;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 850px) {
+  .seller-requirements-grid,
+  .seller-offers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .seller-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .seller-header {
+    padding: 15px 20px;
+  }
+
+  .seller-main {
+    padding: 25px 15px;
+  }
+}
+
+@media (max-width: 550px) {
+  .seller-brand h1 {
+    font-size: 17px;
+  }
+
+  .seller-role {
+    display: none;
+  }
+
+  .seller-welcome h2 {
+    font-size: 24px;
+  }
+
+  .seller-section {
+    padding: 18px;
+  }
+}
+
+/* =====================================================
+   SELLER NOTIFICATIONS
+===================================================== */
+
+.seller-notification-wrapper {
+  position: relative;
+}
+
+.seller-notification-button {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #dbe3ef;
+  background: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease;
+}
+
+.seller-notification-button:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.seller-notification-icon {
+  font-size: 20px;
+}
+
+.seller-notification-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  background: #ef4444;
+  color: white;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+}
+
+.seller-notification-dropdown {
+  position: absolute;
+  top: 52px;
+  right: 0;
+  width: 380px;
+  max-width: calc(100vw - 30px);
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(15, 23, 42, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.seller-notification-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 17px 18px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.seller-notification-header h3 {
+  margin: 0;
+  font-size: 17px;
+  color: #0f172a;
+}
+
+.seller-notification-header span {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.seller-notification-close {
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  color: #64748b;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.seller-notification-list {
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.seller-notification-item {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #f1f5f9;
+  background: white;
+  padding: 15px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  transition: 0.2s ease;
+}
+
+.seller-notification-item:hover {
+  background: #f8fafc;
+}
+
+.seller-notification-unread {
+  background: #eff6ff;
+}
+
+.seller-notification-item-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  background: #dbeafe;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.seller-notification-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.seller-notification-item-content p {
+  margin: 0;
+  color: #334155;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.seller-notification-item-content small {
+  display: block;
+  margin-top: 6px;
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.seller-notification-read {
+  opacity: 0.8;
+}
+
+.seller-unread-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  margin-top: 6px;
+  background: #2563eb;
+  border-radius: 50%;
+}
+
+.seller-no-notifications {
+  padding: 35px 20px;
+  text-align: center;
+  color: #64748b;
+}
+
+.seller-no-notifications div {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.seller-no-notifications p {
+  margin: 0;
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+
+  .seller-notification-dropdown {
+    right: -80px;
+    width: 350px;
+  }
+
+}

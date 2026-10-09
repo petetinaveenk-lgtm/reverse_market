@@ -1,0 +1,66 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: marketplace-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-naveen2006}
+      MYSQL_DATABASE: ${DB_NAME:-reverse_marketplace}
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - marketplace_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$${MYSQL_ROOT_PASSWORD:-naveen2006}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 25s
+    networks:
+      - marketplace-net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: marketplace-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PORT: 8081
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${DB_NAME:-reverse_marketplace}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${DB_ROOT_PASSWORD:-naveen2006}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: ${DDL_AUTO:-update}
+      APP_CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost,http://localhost:80,http://localhost:5173,http://localhost:3000}
+      APP_JWT_SECRET: ${JWT_SECRET:-ReverseMarketplaceSecretKeyForJWTAuthentication2026}
+      ADMIN_REGISTRATION_KEY: ${ADMIN_REGISTRATION_KEY:-15831ed98fe0b357150eaec9ea8ef0fe7396c9eb16c8b978408a42a388839cd5}
+    ports:
+      - "${BACKEND_PORT:-8081}:8081"
+    networks:
+      - marketplace-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: ""
+    container_name: marketplace-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_PORT:-80}:80"
+    networks:
+      - marketplace-net
+
+volumes:
+  marketplace_mysql_data:
+
+networks:
+  marketplace-net:
+    driver: bridge
+
