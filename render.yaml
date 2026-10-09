@@ -24,3 +24,4 @@ services:
         generateValue: true
       - key: ADMIN_REGISTRATION_KEY
         sync: false
+
