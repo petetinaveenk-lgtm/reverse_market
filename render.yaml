@@ -13,7 +13,7 @@ services:
       - key: SPRING_JPA_HIBERNATE_DDL_AUTO
         value: update
       - key: APP_CORS_ALLOWED_ORIGINS
-        sync: false
+        value: https://reverse-market-sandy.vercel.app
       - key: SPRING_DATASOURCE_URL
         sync: false
       - key: SPRING_DATASOURCE_USERNAME
@@ -24,4 +24,3 @@ services:
         generateValue: true
       - key: ADMIN_REGISTRATION_KEY
         sync: false
-

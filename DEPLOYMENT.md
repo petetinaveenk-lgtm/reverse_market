@@ -48,7 +48,7 @@ Docker Compose provides a complete, containerized environment orchestrating:
   * `SPRING_DATASOURCE_USERNAME`: `<db-user>`
   * `SPRING_DATASOURCE_PASSWORD`: `<db-password>`
   * `SPRING_JPA_HIBERNATE_DDL_AUTO`: `update`
-  * `APP_CORS_ALLOWED_ORIGINS`: `https://your-frontend-domain.com`
+  * `APP_CORS_ALLOWED_ORIGINS`: Comma-separated frontend origins, including `https://reverse-market-sandy.vercel.app` for the current Vercel deployment.
   * `APP_JWT_SECRET`: `<your-random-32+-byte-secret-key>`
   * `ADMIN_REGISTRATION_KEY`: `<your-secure-admin-key>`
 
@@ -114,4 +114,3 @@ Use the provided `frontend/nginx.conf` template for your Nginx virtual host.
 | `APP_JWT_EXPIRATION_MS` | JWT expiration duration in milliseconds | `3600000` (1 hour) |
 | `ADMIN_REGISTRATION_KEY` | Secret key required to register ADMIN role | From environment or property |
 | `VITE_API_BASE_URL` | Frontend API endpoint (leave empty for reverse proxy) | `http://localhost:8081` |
-
